@@ -11,11 +11,19 @@ in the tarnscript as prompts for Dall-e mini.
 
 An out output example for the video in "Here comes the sun" by the beatles":
 
-[!["Here comes the sun"](https://img.youtube.com/vi/wh_cIPiaQJg/0.jpg)](https://youtu.be/wh_cIPiaQJg)
+
+!["Here comes the sun"](misc/frame-333.png)
+
+!["Here comes the sun"](misc/frame-432.png) 
+
+!["Here comes the sun"](misc/frame-633.png) 
 
 Only works with youtube videos that have transcription.
 
 
 ## Todo
 - [ ] Fix subtitles no whitespace problems
+- [ ] Allow working on raw .mp3 and .srt files intead of urls only
+- [ ] Support automatic generated youtube transcriptions
 - [ ] Better timing of subtitles and sound
+- [ ] Find way to upload video without copyrights infringement
