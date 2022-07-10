@@ -6,10 +6,13 @@ import replicate
 
 class DalleImageGenerator:
     """Dall-e model using Replicate API"""
-    def __init__(self):
+    def __init__(self, token=None):
         if "REPLICATE_API_TOKEN" not in os.environ:
-            print(f"Please go to https://replicate.com/docs/api for your Replicate API token.")
-            os.environ["REPLICATE_API_TOKEN"] = getpass.getpass(f"Input Replicate API Token:")
+            if token is not None:
+                os.environ["REPLICATE_API_TOKEN"] = token
+            else:
+                print(f"Please go to https://replicate.com/docs/api for your Replicate API token.")
+                os.environ["REPLICATE_API_TOKEN"] = getpass.getpass(f"Input Replicate API Token:")
 
         self.dalle = replicate.models.get("kuprel/min-dalle")
 
