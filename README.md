@@ -27,3 +27,4 @@ Only works with youtube videos that have transcription.
 - [ ] Support automatic generated youtube transcriptions
 - [ ] Better timing of subtitles and sound
 - [ ] Find way to upload video without copyrights infringement
+- [ ] Use other text to image models from Replicate

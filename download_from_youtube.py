@@ -1,9 +1,9 @@
 import os
+import json
+import urllib.parse
 
 from youtube_transcript_api import YouTubeTranscriptApi
-import urllib.parse
 import youtube_dl
-import json
 
 
 def get_video_id(url):
