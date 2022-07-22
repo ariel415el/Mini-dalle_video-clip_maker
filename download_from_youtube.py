@@ -25,6 +25,7 @@ def get_video_name(url):
         data = json.loads(response_text.decode())
         return data['title']
 
+
 def download_transcription(url, output_path):
     if os.path.exists(output_path):
         return
@@ -50,11 +51,3 @@ def download_mp3(url, output_path):
     }
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
-
-if __name__ == '__main__':
-    url = 'https://www.youtube.com/watch?v=0mYBSayCsH0&ab_channel=SmashMouthVEVO'
-    song_name = "I'm a believer"
-    out_dir = os.path.join("data", song_name)
-    os.makedirs(out_dir, exist_ok=True)
-    print(get_transcription(url, out_dir))
-    print(get_mp3(url, out_dir))

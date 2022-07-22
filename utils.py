@@ -3,14 +3,13 @@ import re
 from math import sqrt
 
 import cv2
-import pysrt
-
 
 def get_duration(d):
     return d.minutes*60 + d.seconds + d.milliseconds / 1000
 
 
 def clean_str(str):
+    str = str.replace("\n", " ")
     return re.sub(r'[^A-Za-z0-9 ]+', '', str)
 
 
@@ -22,24 +21,23 @@ def get_sqrt(n):
     return x
 
 
-def read_transcript(path, song_name, n_lines=None):
-    """Read transcription file into a list with (text, start, end) tuples"""
-    if path.endswith(".srt"):
-        subs = pysrt.open(path)
-        texts_and_durations = [(song_name, 0, get_duration(subs[0].start))]
-        for sub in subs:
-            texts_and_durations += [(sub.text, get_duration(sub.start), get_duration(sub.end))]
-    elif path.endswith(".json"):
-        subs = json.load(open(path))
-        texts_and_durations = [(song_name, 0, subs[0]['start'])]
-        for sub in subs:
-            texts_and_durations += [(sub['text'], sub['start'], sub['start'] + sub['duration'])]
-    else:
-        raise ValueError("transcript file not supported")
+def read_and_preprocess_transcript(path, song_name, n_lines=None):
+    """
+    Read transcription file, prepend the songname at the start (before first lyrice line),
+    set the duration of each lyrics line to last until the next one starts
+    """
+
+    transcript = json.load(open(path))
+
+    for i in range(len(transcript)):
+        if i < len(transcript) - 1:
+            transcript[i]['duration'] = transcript[i+1]['start'] - transcript[i]['start']
+
+    transcript = [{'text': song_name, 'start': 0, 'duration':  transcript[0]['start']}] + transcript
 
     if n_lines is not None:
-        texts_and_durations = texts_and_durations[:int(n_lines)]
-    return texts_and_durations
+        transcript = transcript[:int(n_lines)]
+    return transcript
 
 
 def put_subtitles_on_frame(frame, text, resize_factor=1):
